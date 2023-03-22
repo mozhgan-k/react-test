@@ -11,6 +11,10 @@ function App() {
     { id: 3, name: 'Narges', class: 204, phone: '1234567', email: 'example@gmail.com' },
     { id: 4, name: 'Marjan', class: 205, phone: '12345678', email: 'example@gmail.com' },
   ])
+  const [newStudentName, setNewStudentName] = useState('')
+  const [newStudentClass, setNewStudentClass] = useState('')
+  const [newStudentPhone, setNewStudentPhone] = useState('')
+  const [newStudentEmail, setNewStudentEmail] = useState('')
   const [arrayHolder, setArrayHolder] = useState([])
   useEffect(() => {
     setArrayHolder(studentsState)
@@ -42,10 +46,46 @@ function App() {
     setStudent(itemData)
     setSearchBarvalue(event.target.value)
   }
+  const newStudentNameHandler = (event) => {
+    setNewStudentName(event.target.value)
+  }
+  const newStudentClassHandler = (event) => {
+    setNewStudentClass(event.target.value)
+  }
+  const newStudentPhoneHandler = (event) => {
+    setNewStudentPhone(event.target.value)
+  }
+  const newStudentEmailHandler = (event) => {
+    setNewStudentEmail(event.target.value)
+  }
+  const addNewStudent = () => {
+    let newStudentArray = [...studentsState]
+    newStudentArray.push({
+      'name': newStudentName,
+      'class': newStudentClass,
+      'phone': newStudentPhone,
+      'email': newStudentEmail
+    })
+    setStudent(newStudentArray)
+    setNewStudentName('')
+    setNewStudentClass('')
+    setNewStudentPhone('')
+    setNewStudentEmail('')
+  }
   return (
     <div>
       <div style={{display: "flex", justifyContent: "center"}}>
-        <NewStudent/>
+        <NewStudent
+          newStudentName={newStudentName}
+          newStudentClass={newStudentClass}
+          newStudentPhone={newStudentPhone}
+          newStudentEmail={newStudentEmail}
+          newStudentNameHandler={newStudentNameHandler}
+          newStudentClassHandler={newStudentClassHandler}
+          newStudentPhoneHandler={newStudentPhoneHandler}
+          newStudentEmailHandler={newStudentEmailHandler}
+          addNewStudent={addNewStudent}
+        />
       </div>
       <div style={{display: "flex", justifyContent: "center"}}>
       <input type="text" className="searchInp" value={searchBarValue} onChange={searchHandler}/>
