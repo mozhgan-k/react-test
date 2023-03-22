@@ -1,0 +1,35 @@
+.student-card{
+  width: 450px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  direction: rtl;
+  padding: 5px;
+  margin-inline: auto;
+  margin-top: 10px;
+}
+
+label{
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px;
+}
+input{
+  direction: rtl;
+  margin: 4px;
+  height: 20px;
+  width: 80%;
+}
+
+input[type="email"], input[type="number"] {
+  direction: ltr;
+}
+
+.student-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-self: center;
+  grid-gap: 1rem;
+}

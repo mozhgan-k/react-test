@@ -1,0 +1,10 @@
+.tagStyle{
+  color: indigo;
+  font-weight: bold
+}
+
+.tagStyle:hover{
+  color: blueviolet;
+  font-style: italic;
+  cursor: pointer;
+}

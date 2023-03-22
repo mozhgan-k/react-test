@@ -1,23 +1,59 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
-
+import Students from './components/students/students';
+import Button from './components/UI/button';
+import NewStudent from './components/students/newStudent';
 function App() {
+  const [studentsState, setStudent] = useState([
+    { id: 0, name: 'Mozhgan', class: 201, phone: '1234', email: 'example@gmail.com' },
+    { id: 1, name: 'Sara', class: 202, phone: '12345', email: 'example@gmail.com' },
+    { id: 2, name: 'Amir', class: 203, phone: '123456', email: 'example@gmail.com' },
+    { id: 3, name: 'Narges', class: 204, phone: '1234567', email: 'example@gmail.com' },
+    { id: 4, name: 'Marjan', class: 205, phone: '12345678', email: 'example@gmail.com' },
+  ])
+  const [arrayHolder, setArrayHolder] = useState([])
+  useEffect(() => {
+    setArrayHolder(studentsState)
+  },[])
+  const [toggle, setToggle] = useState(false)
+  const [searchBarValue, setSearchBarvalue] = useState('')
+  const nameChangeHandler = (event, id) => {
+    const findChanged = studentsState.findIndex(s => s.id === id)
+    const changedStudent = { ...studentsState[findChanged] }
+    changedStudent.name = event.target.value
+    const newStudents = [...studentsState]
+    newStudents[findChanged] = changedStudent
+    setStudent(newStudents)
+  }
+  const deleteStudent = (index) => {
+    const students = [...studentsState]
+    students.splice(index, 1)
+    setStudent(students)
+  }
+  const toggleHandler = () => {
+    setToggle(!toggle)
+  }
+  const searchHandler = (event) => {
+    const itemData = arrayHolder.filter((item) => {
+      const itemData = item.name.toUpperCase()
+      const textData = event.target.value.toUpperCase()
+      return itemData.indexOf(textData) > -1
+    })
+    setStudent(itemData)
+    setSearchBarvalue(event.target.value)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <NewStudent/>
+      </div>
+      <div style={{display: "flex", justifyContent: "center"}}>
+      <input type="text" className="searchInp" value={searchBarValue} onChange={searchHandler}/>
+      </div>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        <Button btnType="success" clicked={toggleHandler}>تغییر وضعیت نمایش</Button>
+      </div>
+      <Students studentList={studentsState} nameChanged={nameChangeHandler} deleted={deleteStudent} toggle={toggle}/>
     </div>
   );
 }
